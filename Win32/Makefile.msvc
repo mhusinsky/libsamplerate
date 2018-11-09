@@ -5,20 +5,23 @@
 # CFLAGS=/nologo /MD /W1 /GX /O2 /I "$(MSVCDir)\Include" /I . /I "Win32" /I "src" /D "WIN32" /D "_USRDLL" /YX /FD /Zm1000
 # PROG_LINK_FLAGS=/nologo /incremental:no /libpath:"$(MSVCDir)\Lib" /pdb:"libsamplerate-0.pdb" /machine:I386 /exetype:dynamic
 
-MSVCDir="C:\Progra~1\Micros~1.Net\Vc7"
-CFLAGS=/nologo /MD /W1 /GX /O2 /Zm200 /I "$(MSVCDir)\Include" /I "$(MSVCDir)\PlatformSDK\Include" /I . /I "Win32" /I "src" /D "WIN32" /D "_USRDLL" /YX /FD /Zm1000
-PROG_LINK_FLAGS=/nologo /incremental:no /libpath:"$(MSVCDir)\Lib" /libpath:"$(MSVCDir)\PlatformSDK\Lib" /pdb:"libsamplerate-0.pdb" /machine:I386 /exetype:dynamic
+MSVCDir=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC
+CFLAGS=/nologo /MD /W1 /GX /O2 /Zm200 /I "$(MSVCDir)\include" /I "C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt" /I . /I "Win32" /I "src" /D "WIN32" /D "_USRDLL" /YX /FD /Zm1000
+PROG_LINK_FLAGS=/nologo /incremental:no /libpath:"$(MSVCDir)\lib\amd64" /libpath:"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17134.0\ucrt" /machine:I386 /exetype:dynamic
 
+
+# set windows path to C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\amd64
 CPP=cl.exe
 LINK32=link.exe
-DLL_LINK_FLAGS=/nologo /dll /incremental:no /libpath:"$(MSVCDir)\Lib" /pdb:"libsamplerate-0.pdb" /implib:".\libsamplerate-0.lib" /machine:I386 /out:"libsamplerate-0.dll"
+WINDOWSKITS=C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17134.0
+DLL_LINK_FLAGS=/nologo /dll /incremental:no /libpath:"$(MSVCDir)\lib\amd64" /libpath:"$(WINDOWSKITS)\um\x64"  /libpath:"$(WINDOWSKITS)\ucrt\x64" /pdb:"libsamplerate-0.pdb" /implib:".\libsamplerate-0.lib" /machine:X64 /out:"libsamplerate-0.dll"
 
 #====================================================================
 # Targets
 
 ALL : libsndfile-1.lib libsamplerate-0.dll \
-	".\examples\sndfile-resample.exe" \
-	".\examples\varispeed-play.exe"
+#	".\examples\sndfile-resample.exe" \
+#	".\examples\varispeed-play.exe"
 
 CLEAN :
     -@erase "src\*.obj"
