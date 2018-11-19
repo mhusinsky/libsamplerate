@@ -16,6 +16,7 @@ LINK32=link.exe
 WINDOWSKITS=C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17134.0
 DLL_LINK_FLAGS=/nologo /dll /incremental:no /libpath:"$(MSVCDir)\lib\amd64" /libpath:"$(WINDOWSKITS)\um\x64"  /libpath:"$(WINDOWSKITS)\ucrt\x64" /pdb:"libsamplerate-0.pdb" /implib:".\libsamplerate-0.lib" /machine:X64 /out:"libsamplerate-0.dll"
 
+
 #====================================================================
 # Targets
 
@@ -23,9 +24,13 @@ ALL : libsndfile-1.lib libsamplerate-0.dll \
 #	".\examples\sndfile-resample.exe" \
 #	".\examples\varispeed-play.exe"
 
+LIB : libsamplerate-0.lib
+
 CLEAN :
     -@erase "src\*.obj"
     -@erase "tests\*.exe"
+	-@erase ".\*.lib"
+	-@erase ".\*.dll"
 
 #====================================================================
 
@@ -37,6 +42,9 @@ LINK32_OBJS= \
 
 libsamplerate-0.dll : $(LINK32_OBJS) ".\Win32\libsamplerate-0.def"
     $(LINK32) $(DLL_LINK_FLAGS) /def:".\Win32\libsamplerate-0.def" $(LINK32_OBJS)
+	
+libsamplerate-0.lib : $(LINK32_OBJS)
+	lib.exe /out:libsamplerate-0.lib $(LINK32_OBJS)
 
 ".\examples\sndfile-resample.exe" : ".\examples\sndfile-resample.c"
     $(CPP) $(CFLAGS) /Fo".\examples\sndfile-resample.obj" /c ".\examples\sndfile-resample.c"
